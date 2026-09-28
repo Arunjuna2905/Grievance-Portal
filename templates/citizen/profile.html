@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}My Profile | SmartGov{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <p class="eyebrow">ACCOUNT SETTINGS</p>
+    <h1>Your Profile</h1>
+    <p>Manage your account personal details and security password.</p>
+  </div>
+</div>
+
+<div class="form-stack" style="max-width: 640px; margin: 0 auto;">
+  <form method="post" class="card form-grid">
+    <h2 class="wide" style="font-size: 18px; margin-bottom: 8px;">Personal Information</h2>
+
+    <label class="wide">Full Name
+      <input name="name" value="{{ user.name }}" required placeholder="Your full name">
+    </label>
+
+    <label>Email Address
+      <input value="{{ user.email }}" disabled style="background: var(--surface2); cursor: not-allowed;">
+    </label>
+
+    <label>Phone Number
+      <input name="phone" value="{{ user.phone or '' }}" placeholder="Mobile number">
+    </label>
+
+    <section class="notification-setting wide" aria-labelledby="notification-heading">
+      <div>
+        <h2 id="notification-heading">Complaint Notifications</h2>
+        <p>Receive website notifications when your complaint is acknowledged, in progress, or resolved.</p>
+      </div>
+      <label class="switch-control">
+        <input id="status-notifications-toggle" type="checkbox" name="status_notifications_enabled" value="1" data-preference-url="{{ url_for('notification_preference') }}" {% if user.status_notifications_enabled %}checked{% endif %}>
+        <span class="switch-slider" aria-hidden="true"></span>
+        <span class="switch-label">{% if user.status_notifications_enabled %}On{% else %}Off{% endif %}</span>
+      </label>
+    </section>
+
+    <hr class="wide" style="border: none; border-top: 1px solid var(--border); margin: 16px 0;">
+
+    <h2 class="wide" style="font-size: 18px; margin-bottom: 4px;">Update Password</h2>
+    <p class="wide" style="font-size: 13px; color: var(--ink-dim); margin-bottom: 12px;">Leave password fields blank if you do not wish to change your password.</p>
+
+    <label class="wide">Current Password
+      <input type="password" name="current_password" placeholder="Enter current password to verify">
+    </label>
+
+    <label class="wide">New Password
+      <input type="password" name="new_password" placeholder="Enter new password (min. 6 characters)">
+    </label>
+
+    <div class="wide" style="margin-top: 12px;">
+      <button class="button" type="submit">Save Changes</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% block title %}Update Complaint {{ complaint.reference }} | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">DEPARTMENT WORKSPACE — {{ complaint.reference }}</p>
+    <h1>Update Complaint Status</h1>
+    <p>{{ complaint.title }}</p>
+  </div>
+  <div style="text-align: right;">
+    <span class="badge {{ complaint.status | lower | replace(' ', '-') }}" style="font-size: 1rem; padding: 0.5rem 1rem;">Current Status: {{ complaint.status }}</span>
+  </div>
+</div>
+
+<style>
+  .update-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 900px) {
+    .update-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .status-cards-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 1.5rem 0;
+  }
+  @media (max-width: 640px) {
+    .status-cards-group {
+      grid-template-columns: 1fr;
+    }
+  }
+  .status-card-label {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    padding-right: 3rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    user-select: none;
+  }
+  .status-card-label:hover {
+    border-color: var(--primary, #10b981);
+    background: rgba(16, 185, 129, 0.05);
+    transform: translateY(-2px);
+  }
+  .status-card-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .card-radio-tick {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    color: transparent;
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .status-card-label.selected {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.12);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  }
+  .status-card-label.selected .card-radio-tick {
+    border-color: #10b981;
+    background: #10b981;
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+  .status-card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.35rem;
+  }
+  .status-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted, #94a3b8);
+    line-height: 1.4;
+  }
+  .description-box {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.25);
+    color: inherit;
+    resize: vertical;
+    min-height: 130px;
+  }
+  .description-box:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.35rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #10b981;
+  }
+</style>
+
+<div class="update-grid">
+  <div>
+    <!-- 5-Minute Resolution Countdown Banner -->
+    <div id="detail-countdown-banner" class="countdown-banner">
+      <span style="font-size: 2.2rem; line-height: 1;">⏱️</span>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <span style="font-weight: 700; font-size: 1.05rem;">5-Minute Resolution Deadline</span>
+          <span id="detail-countdown-timer" class="countdown-clock">--:--</span>
+        </div>
+        <small style="color: var(--text-muted, #94a3b8); font-size: 0.85rem; display: block; margin-top: 2px;">
+          Staff must inspect and update this complaint status to <strong>Resolved</strong> within 5 minutes of submission.
+        </small>
+      </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="card">
+      <h2 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Select Status Update</h2>
+      <p style="color: var(--text-muted, #94a3b8); font-size: 0.95rem; margin-bottom: 1rem;">Select the new resolution status for this grievance:</p>
+
+      <div class="status-cards-group">
+        <label class="status-card-label {% if complaint.status == 'Acknowledged' %}selected{% endif %}" id="card-acknowledged">
+          <input type="radio" name="status" value="Acknowledged" {% if complaint.status == 'Acknowledged' %}checked{% endif %} required onchange="updateSelectedCard(this)">
+          <span class="card-radio-tick">✓</span>
+          <span class="badge acknowledged" style="width: fit-content;">Acknowledged</span>
+          <span class="status-card-title">Acknowledged</span>
+          <span class="status-card-desc">Grievance reviewed and assigned to department staff.</span>
+        </label>
+
+        <label class="status-card-label {% if complaint.status == 'In Progress' %}selected{% endif %}" id="card-in-progress">
+          <input type="radio" name="status" value="In Progress" {% if complaint.status == 'In Progress' %}checked{% endif %} required onchange="updateSelectedCard(this)">
+          <span class="card-radio-tick">✓</span>
+          <span class="badge in-progress" style="width: fit-content;">In Progress</span>
+          <span class="status-card-title">In Progress</span>
+          <span class="status-card-desc">Field inspection, repairs, or active work is underway.</span>
+        </label>
+
+        <label class="status-card-label {% if complaint.status == 'Resolved' %}selected{% endif %}" id="card-resolved">
+          <input type="radio" name="status" value="Resolved" {% if complaint.status == 'Resolved' %}checked{% endif %} required onchange="updateSelectedCard(this)">
+          <span class="card-radio-tick">✓</span>
+          <span class="badge resolved" style="width: fit-content;">Resolved</span>
+          <span class="status-card-title">Resolved</span>
+          <span class="status-card-desc">Issue completely resolved and verified by staff.</span>
+        </label>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <label for="message" style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.05rem;">
+          Update Description / Officer Remarks
+        </label>
+        <textarea id="message" name="message" class="description-box" rows="5" placeholder="Enter remarks regarding progress, field observations, or resolution details..." required></textarea>
+        <small style="display: block; color: var(--text-muted, #94a3b8); margin-top: 0.4rem;">This update description will be recorded in the complaint timeline and sent to the citizen.</small>
+      </div>
+
+      <!-- Image upload section for resolution / work proof photo -->
+      <div style="margin-top: 1.5rem; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 1.25rem;">
+        <label for="image" style="display: flex; align-items: center; justify-content: space-between; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.05rem;">
+          <span>📷 Resolution / Work Proof Photo</span>
+          <span id="photo-tag" style="font-size: 0.85rem; color: #10b981; font-weight: 500;">(Required / Recommended for Resolved)</span>
+        </label>
+        <input type="file" id="image" name="image" accept="image/jpeg,image/jpg,image/png" style="width: 100%; padding: 0.6rem 0.8rem; border-radius: 8px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); color: inherit;">
+        <small style="display: block; color: var(--text-muted, #94a3b8); margin-top: 0.5rem; font-size: 0.85rem;">Upload a photo showing the completed work or resolution evidence. This photo will be displayed on the citizen's status timeline.</small>
+      </div>
+
+      <div class="actions" style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
+        <button type="submit" class="button" style="padding: 0.75rem 1.75rem; font-size: 1rem;">Publish Update →</button>
+        <a class="button secondary" href="{{ url_for('department_dashboard', department=department.lower().replace(' ','-')) }}" style="text-decoration: none; padding: 0.75rem 1.5rem;">← Back to Dashboard</a>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">Complaint Information</h3>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+        <div><strong>Reference ID:</strong> <span style="color: var(--primary, #10b981);">{{ complaint.reference }}</span></div>
+        <div><strong>Department:</strong> {{ complaint.department }}</div>
+        <div><strong>Priority:</strong> <span class="badge {{ complaint.priority | lower }}">{{ complaint.priority }}</span></div>
+        <div><strong>Submitted On:</strong> {{ complaint.created_at }}</div>
+        {% if complaint.address %}
+          <div><strong>Location:</strong> {{ complaint.address }}</div>
+        {% endif %}
+        {% if complaint.description %}
+          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.1);">
+            <strong>Citizen Description:</strong>
+            <p style="color: var(--text-muted, #94a3b8); margin-top: 0.25rem; font-size: 0.9rem;">{{ complaint.description }}</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if updates %}
+    <div class="card">
+      <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">Update History</h3>
+      <div class="timeline-list">
+        {% for u in updates %}
+          <div class="timeline-item">
+            <span class="badge {{ u.status | lower | replace(' ', '-') }}" style="font-size: 0.75rem;">{{ u.status }}</span>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; font-weight: 500;">{{ u.message }}</p>
+            {% if u.image_path %}
+              <div style="margin-top: 0.4rem;">
+                <a href="{{ url_for('static', filename=u.image_path) }}" target="_blank">
+                  <img src="{{ url_for('static', filename=u.image_path) }}" alt="Proof photo" style="max-width: 100%; max-height: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); object-fit: cover;">
+                </a>
+              </div>
+            {% endif %}
+            <small style="color: var(--text-muted, #94a3b8); font-size: 0.8rem;">{{ u.created_at }}</small>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  function updateSelectedCard(radio) {
+    document.querySelectorAll('.status-card-label').forEach(card => {
+      card.classList.remove('selected');
+    });
+    if (radio.checked) {
+      radio.closest('.status-card-label').classList.add('selected');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkedRadio = document.querySelector('.status-card-label input[type="radio"]:checked');
+    if (checkedRadio) {
+      checkedRadio.closest('.status-card-label').classList.add('selected');
+    }
+
+    // ── 5-MINUTE LIVE COUNTDOWN TIMER ──
+    const createdStr = "{{ complaint.created_at }}";
+    const status = "{{ complaint.status }}";
+    const timerEl = document.getElementById('detail-countdown-timer');
+    const bannerEl = document.getElementById('detail-countdown-banner');
+
+    if (timerEl && bannerEl) {
+      if (status === 'Resolved' || status === 'Closed') {
+        timerEl.textContent = '✅ RESOLVED';
+        timerEl.style.fontSize = '1.3rem';
+        timerEl.style.color = '#10b981';
+      } else {
+        function runCountdown() {
+          let iso = createdStr.trim().replace(' ', 'T');
+          let createdDate = new Date(iso);
+          if (isNaN(createdDate.getTime())) {
+            createdDate = new Date(createdStr);
+          }
+          if (isNaN(createdDate.getTime())) {
+            timerEl.textContent = '--:--';
+            return;
+          }
+
+          const deadline = createdDate.getTime() + (5 * 60 * 1000);
+          const now = Date.now();
+          const diffMs = deadline - now;
+
+          bannerEl.classList.remove('urgent', 'expired');
+
+          if (diffMs <= 0) {
+            timerEl.textContent = '00:00 (EXPIRED)';
+            bannerEl.classList.add('expired');
+          } else {
+            const totalSec = Math.floor(diffMs / 1000);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            const formatted = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            timerEl.textContent = formatted;
+
+            if (mins < 2) {
+              bannerEl.classList.add('urgent');
+            }
+          }
+        }
+
+        runCountdown();
+        setInterval(runCountdown, 1000);
+      }
+    }
+  });
+</script>
+{% endblock %}

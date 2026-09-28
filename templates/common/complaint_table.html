@@ -1,0 +1,101 @@
+{% if complaints %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Issue</th>
+        <th>Department</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>5m Deadline</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in complaints %}
+      <tr>
+        <td><b style="color:var(--primary)">{{ c.reference }}</b></td>
+        <td>
+          {{ c.title }}
+          {% if c.complaint_count is defined and c.complaint_count > 1 %}
+            <span class="badge submitted" title="{{ c.complaint_count }} complaints reported for this department and location">({{ c.complaint_count }})</span>
+          {% endif %}
+        </td>
+        <td>{{ c.department }}</td>
+        <td>
+          {% if c.priority == 'High' %}<span style="color:var(--danger, #e11d48);font-weight:700">● High</span>
+          {% elif c.priority == 'Medium' %}<span style="color:var(--warning, #d97706);font-weight:700">● Medium</span>
+          {% else %}<span style="color:var(--success, #10b981);font-weight:700">● Low</span>{% endif %}
+        </td>
+        <td><span class="badge {{ c.status | lower | replace(' ', '-') }}">{{ c.status }}</span></td>
+        <td data-deadline-created="{{ c.created_at }}" data-status="{{ c.status }}">
+          {% if c.status in ['Resolved', 'Closed'] %}
+            <span class="badge resolved">✅ Resolved</span>
+          {% else %}
+            <span class="badge-timer-normal">⏱️ Calculating...</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if request.path.startswith('/department') or (current_user and current_user.role in ['officer', 'admin']) %}
+            <a href="{{ url_for('update_complaint', department=c.department.lower().replace(' ','-'), complaint_id=c.id) }}" class="button small">Update →</a>
+          {% else %}
+            <a href="{{ url_for('complaint_status', complaint_id=c.id) }}">View →</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+(function() {
+  function updateTableCountdowns() {
+    const now = Date.now();
+    document.querySelectorAll('[data-deadline-created]').forEach(el => {
+      const status = el.getAttribute('data-status');
+      if (status === 'Resolved' || status === 'Closed') {
+        el.innerHTML = '<span class="badge resolved">✅ Resolved</span>';
+        return;
+      }
+      const createdStr = el.getAttribute('data-deadline-created');
+      if (!createdStr) return;
+
+      let isoStr = createdStr.trim().replace(' ', 'T');
+      let createdTime = new Date(isoStr).getTime();
+      if (isNaN(createdTime)) {
+        createdTime = new Date(createdStr).getTime();
+      }
+      if (isNaN(createdTime)) return;
+
+      const deadline = createdTime + (5 * 60 * 1000);
+      const diffMs = deadline - now;
+
+      if (diffMs <= 0) {
+        el.innerHTML = '<span class="badge-expired">🚨 DEADLINE EXPIRED</span>';
+      } else {
+        const totalSec = Math.floor(diffMs / 1000);
+        const mins = Math.floor(totalSec / 60);
+        const secs = totalSec % 60;
+        const formatted = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+
+        if (mins < 2) {
+          el.innerHTML = `<span class="badge-timer-urgent">⏱️ ${formatted} remaining</span>`;
+        } else {
+          el.innerHTML = `<span class="badge-timer-normal">⏱️ ${formatted} remaining</span>`;
+        }
+      }
+    });
+  }
+
+  updateTableCountdowns();
+  setInterval(updateTableCountdowns, 1000);
+})();
+</script>
+{% else %}
+<div class="empty">
+  <h3>No grievances yet</h3>
+  <p>Start by registering the issue you need help with.</p>
+</div>
+{% endif %}

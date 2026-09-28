@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Sign in | SmartGov{% endblock %}
+{% block content %}
+<section class="access-layout">
+  <div class="access-intro">
+    <p class="eyebrow">SECURE CITIZEN ACCESS</p>
+    <h1>Welcome<br>back.</h1>
+    <p>Your grievance workspace keeps every update, document, and department response in one transparent view.</p>
+
+    <div class="access-feature-list">
+      <div class="access-feature">
+        <span class="feat-icon">🔒</span>
+        <div>
+          <b>Secure Sign-In</b>
+          <small>Your data is encrypted and protected</small>
+        </div>
+      </div>
+      <div class="access-feature">
+        <span class="feat-icon">📊</span>
+        <div>
+          <b>Private Dashboard</b>
+          <small>Track all your complaints in real time</small>
+        </div>
+      </div>
+      <div class="access-feature">
+        <span class="feat-icon">🔔</span>
+        <div>
+          <b>Status Notifications</b>
+          <small>Instant updates on every status change</small>
+        </div>
+      </div>
+      <div class="access-feature">
+        <span class="feat-icon">📍</span>
+        <div>
+          <b>Geo-Tagged Evidence</b>
+          <small>Location-verified photo submission</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="access-stats-row">
+      <div><b>500+</b><small>Complaints Resolved</small></div>
+      <div><b>24/7</b><small>Service Availability</small></div>
+      <div><b>5</b><small>Departments Connected</small></div>
+    </div>
+  </div>
+
+  <form method="post" class="access-card">
+    <div class="form-heading">
+      <span class="brand-mark">SG</span>
+      <div>
+        <p class="eyebrow">SMARTGOV ACCESS</p>
+        <h2>Sign in</h2>
+      </div>
+    </div>
+    <label>Email address
+      <input type="email" name="email" autocomplete="email" placeholder="name@example.com" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
+    </label>
+    <button class="button button-large" style="width:100%;justify-content:center;">Sign in →</button>
+    <div class="form-divider"><span>OR</span></div>
+    <p class="form-bottom">New to SmartGov? <a href="{{ url_for('register') }}">Create your free account</a></p>
+    <p class="form-bottom" style="margin-top:8px;font-size:11px;color:var(--ink-faint);">By signing in you agree to use this platform for genuine civic grievances only.</p>
+  </form>
+</section>
+{% endblock %}

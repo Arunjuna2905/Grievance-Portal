@@ -1,0 +1,6 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">DEPARTMENT WORKSPACE</p><h1>{{department}}</h1><p>Review incoming issues and keep citizens informed.</p></div></div>
+<section class="stats"><article><b>{{stats.total}}</b><span>Assigned cases</span></article><article><b>{{stats.open}}</b><span>Open cases</span></article><article><b>{{stats.resolved}}</b><span>Resolved cases</span></article></section>
+<section class="card"><h2>Department queue</h2>{% include 'common/complaint_table.html' %}</section>
+{% endblock %}

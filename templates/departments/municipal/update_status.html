@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Update grievance | Municipal Services{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">MUNICIPAL SERVICES · {{ complaint.reference if complaint else 'GRIEVANCE UPDATE' }}</p><h1>Publish an update</h1><p>{{ complaint.title if complaint else 'Keep the citizen informed about progress.' }}</p></div><a class="outline" href="{{ url_for('department_dashboard', department='municipal') }}">Return to queue</a></div>
+<form method="post" class="card form-grid"><label>Current status<select name="status">{% for value in ['Acknowledged','In Progress','Resolved','Closed'] %}<option {% if complaint and value == complaint.status %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label><div class="card note"><b>Citizen notification</b><p>Your update will be published to the citizen dashboard.</p></div><label class="wide">Progress update<textarea name="message" rows="6" placeholder="State the action taken, field visit details, next step, and expected timeline."></textarea></label><div class="wide actions"><button class="button">Publish update</button><a class="text-link" href="{{ url_for('department_dashboard', department='municipal') }}">Cancel</a></div></form>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Service Performance | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">REPORTING</p>
+    <h1>Service Performance</h1>
+    <p>Live figures generated from registered grievances.</p>
+  </div>
+</div>
+
+<section class="stats">
+  <article><b>{{ stats.total }}</b><span>Received</span></article>
+  <article><b>{{ stats.open }}</b><span>Awaiting Resolution</span></article>
+  <article><b>{{ stats.resolved }}</b><span>Completed</span></article>
+</section>
+
+<section class="card">
+  <h2>Department Performance</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Department</th><th>Received</th><th>Resolved</th><th>Rate</th></tr></thead>
+      <tbody>
+        {% for d in department_data %}
+        <tr>
+          <td><b>{{ d.name }}</b></td>
+          <td>{{ d.total }}</td>
+          <td><span style="color:var(--success);font-weight:700">{{ d.resolved }}</span></td>
+          <td>
+            {% if d.total > 0 %}
+              {% set rate = (d.resolved / d.total * 100) | int %}
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden">
+                  <div style="width:{{ rate }}%;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:99px"></div>
+                </div>
+                <span style="font-size:12px;color:var(--text-muted);min-width:36px">{{ rate }}%</span>
+              </div>
+            {% else %}—{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | SmartGov{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <p class="eyebrow">ADMINISTRATION PANEL</p>
+    <h1>Operations Overview</h1>
+    <p>Monitor, manage and resolve citizen grievances across all departments in real time.</p>
+  </div>
+</div>
+
+<!-- ── KPI Stats ──────────────────────────────────────────────── -->
+<section class="stats stats-4">
+  <article>
+    <div class="stat-icon" style="background:#dcfce7">📋</div>
+    <b>{{ stats.total }}</b>
+    <span>Total Grievances</span>
+    <small class="stat-hint">All time submissions</small>
+  </article>
+  <article>
+    <div class="stat-icon" style="background:#fef3c7">⏳</div>
+    <b style="color:#d97706">{{ stats.open }}</b>
+    <span>Active Cases</span>
+    <small class="stat-hint">Pending resolution</small>
+  </article>
+  <article>
+    <div class="stat-icon" style="background:#dcfce7">✅</div>
+    <b>{{ stats.resolved }}</b>
+    <span>Resolved Cases</span>
+    <small class="stat-hint">Successfully closed</small>
+  </article>
+  <article>
+    <div class="stat-icon" style="background:#eff6ff">🏢</div>
+    <b>5</b>
+    <span>Departments</span>
+    <small class="stat-hint">Water, PWD, Municipal +2</small>
+</section>
+<!-- ── Department Portals ──────────────────────────────────────── -->
+<section class="departments-section" style="margin-top:28px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div>
+      <h2 style="font-size:20px;font-family:'Space Grotesk',sans-serif;font-weight:700;">Department Portals</h2>
+      <p style="color:var(--ink-dim);font-size:13px;margin-top:2px;">Select a department to view and manage its dedicated admin workspace and complaint queue.</p>
+    </div>
+  </div>
+  <div class="action-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+    <a class="action-card" style="cursor: default;">
+      <span class="action-icon" style="background:#ffffff; color:#16a34a; border:1.5px solid #bbf7d0; border-radius:12px; width:46px; height:46px; display:grid; place-items:center; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
+          <path d="M2 20h20"></path>
+          <path d="M14 12v.01"></path>
+        </svg>
+      </span>
+      <b>Public Works{% if dept_unread and dept_unread.get('Public Works', 0) > 0 %} <span style="color:#dc2626; font-weight:800;">({{ dept_unread.get('Public Works') }})</span>{% endif %}</b>
+      <small>Roads & Streetlights complaints</small>
+    </a>
+    <a class="action-card" style="cursor: default;">
+      <span class="action-icon" style="background:#ffffff; color:#0891b2; border:1.5px solid #a5f3fc; border-radius:12px; width:46px; height:46px; display:grid; place-items:center; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </span>
+      <b>Municipal{% if dept_unread and dept_unread.get('Municipal', 0) > 0 %} <span style="color:#dc2626; font-weight:800;">({{ dept_unread.get('Municipal') }})</span>{% endif %}</b>
+      <small>Waste & Sanitation complaints</small>
+    </a>
+    <a class="action-card" style="cursor: default;">
+      <span class="action-icon" style="background:#ffffff; color:#2563eb; border:1.5px solid #bfdbfe; border-radius:12px; width:46px; height:46px; display:grid; place-items:center; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+        </svg>
+      </span>
+      <b>Water Supply{% if dept_unread and dept_unread.get('Water Supply', 0) > 0 %} <span style="color:#dc2626; font-weight:800;">({{ dept_unread.get('Water Supply') }})</span>{% endif %}</b>
+      <small>Water supply & pipeline issues</small>
+    </a>
+    <a class="action-card" style="cursor: default;">
+      <span class="action-icon" style="background:#ffffff; color:#ca8a04; border:1.5px solid #fef08a; border-radius:12px; width:46px; height:46px; display:grid; place-items:center; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+      </span>
+      <b>Electricity{% if dept_unread and dept_unread.get('Electricity', 0) > 0 %} <span style="color:#dc2626; font-weight:800;">({{ dept_unread.get('Electricity') }})</span>{% endif %}</b>
+      <small>Power cuts & grid failure cases</small>
+    </a>
+    <a class="action-card" style="cursor: default;">
+      <span class="action-icon" style="background:#ffffff; color:#7c3aed; border:1.5px solid #ddd6fe; border-radius:12px; width:46px; height:46px; display:grid; place-items:center; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>
+      </span>
+      <b>Drainage{% if dept_unread and dept_unread.get('Drainage', 0) > 0 %} <span style="color:#dc2626; font-weight:800;">({{ dept_unread.get('Drainage') }})</span>{% endif %}</b>
+      <small>Drainage & sewage overflow issues</small>
+    </a>
+  </div>
+</section>
+
+<!-- ── Quick Actions ─────────────────────────────────────────── -->
+<section class="quick-actions">
+  <h2 class="section-label">Quick Actions</h2>
+  <div class="action-grid">
+    <a href="{{ url_for('admin_citizens') }}" class="action-card">
+      <span class="action-icon">👥</span>
+      <b>Citizens</b>
+      <small>View registered citizen accounts</small>
+    </a>
+    <a href="{{ url_for('admin_reports') }}" class="action-card">
+      <span class="action-icon">📊</span>
+      <b>Reports</b>
+      <small>Analytics and performance data</small>
+    </a>
+    <a href="{{ url_for('admin_departments') }}" class="action-card">
+      <span class="action-icon">🏛️</span>
+      <b>Departments</b>
+      <small>Department workload overview</small>
+    </a>
+    <a href="{{ url_for('admin_officers') }}" class="action-card">
+      <span class="action-icon">&#128119;</span>
+      <b>Staff</b>
+      <small>View staff contacts and pending complaints</small>
+    </a>
+  </div>
+</section>
+
+<!-- ── System Info ────────────────────────────────────────────── -->
+<section class="info-banner">
+  <div class="info-item">
+    <span class="info-dot green"></span>
+    <span>AI Priority Routing — <b>Active</b></span>
+  </div>
+  <div class="info-item">
+    <span class="info-dot green"></span>
+    <span>OCR Geo-Tag Verification — <b>Active</b></span>
+  </div>
+  <div class="info-item">
+    <span class="info-dot green"></span>
+    <span>MySQL Database — <b>Connected</b></span>
+  </div>
+</section>
+
+{% endblock %}

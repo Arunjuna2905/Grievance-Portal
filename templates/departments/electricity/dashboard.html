@@ -1,0 +1,7 @@
+﻿{% extends 'base.html' %}
+{% block title %}Electricity | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">DEPARTMENT WORKSPACE</p><h1>Electricity</h1><p>Manage assigned public grievances and publish accountable updates.</p></div><a class="outline" href="{{ url_for('department_dashboard', department='electricity') }}">Open live queue</a></div>
+<section class="stats"><article><b>{{ stats.total if stats else '0' }}</b><span>Assigned grievances</span></article><article><b>{{ stats.open if stats else '0' }}</b><span>Awaiting resolution</span></article><article><b>{{ stats.resolved if stats else '0' }}</b><span>Resolved cases</span></article></section>
+<section class="card"><div class="section-title"><div><p class="eyebrow">WORK QUEUE</p><h2>Priority cases</h2></div><a href="{{ url_for('department_dashboard', department='electricity') }}">View live workspace</a></div>{% if complaints %}{% include 'common/complaint_table.html' %}{% else %}<div class="empty"><h3>Your queue is clear</h3><p>New Electricity grievances will appear here when assigned.</p></div>{% endif %}</section>
+{% endblock %}

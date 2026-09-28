@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard | SmartGov{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <p class="eyebrow">CITIZEN DASHBOARD</p>
+    <h1>Your Grievances</h1>
+    <p>Track every issue you've submitted — from filing to final resolution.</p>
+  </div>
+  <a class="button" href="{{ url_for('new_complaint') }}">+ New Grievance</a>
+</div>
+
+<!-- ── Stats ──────────────────────────────────────────────────── -->
+<section class="stats">
+  <article>
+    <div class="stat-icon" style="background:#dcfce7">📋</div>
+    <b>{{ stats.total }}</b>
+    <span>Total Submitted</span>
+    <small class="stat-hint">All your complaints</small>
+  </article>
+  <article>
+    <div class="stat-icon" style="background:#fef3c7">🔄</div>
+    <b style="color:#d97706">{{ stats.open }}</b>
+    <span>In Progress</span>
+    <small class="stat-hint">Being worked on</small>
+  </article>
+  <article>
+    <div class="stat-icon" style="background:#dcfce7">✅</div>
+    <b>{{ stats.resolved }}</b>
+    <span>Resolved</span>
+    <small class="stat-hint">Successfully closed</small>
+  </article>
+</section>
+
+<!-- ── How it Works ───────────────────────────────────────────── -->
+<section class="how-it-works">
+  <h2 class="section-label">How Your Complaint Moves</h2>
+  <div class="steps-row">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <b>You Submit</b>
+      <small>Fill the form with a geo-tagged photo, location and description.</small>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <b>AI Routes</b>
+      <small>Our AI assigns priority and routes it to the correct department.</small>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <b>Dept. Acts</b>
+      <small>The responsible officer acknowledges and begins work.</small>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <b>You're Notified</b>
+      <small>Check your dashboard and AI assistant for real-time status updates.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ── Recent Activity ────────────────────────────────────────── -->
+<section class="card" style="margin-top:28px;">
+  <div class="section-title">
+    <div>
+      <h2>Recent Activity</h2>
+      <p style="color:var(--ink-dim);font-size:13px;margin-top:2px;">Your latest complaint submissions and their current status</p>
+    </div>
+    <a class="text-link" href="{{ url_for('complaint_history') }}">View all →</a>
+  </div>
+  {% include 'common/complaint_table.html' %}
+</section>
+
+<!-- ── Tips Banner ────────────────────────────────────────────── -->
+<section class="tips-banner">
+  <div class="tip-item">
+    <span>📍</span>
+    <div><b>Use GPS Map Camera</b><small>Always attach a geo-tagged photo for faster processing.</small></div>
+  </div>
+  <div class="tip-item">
+    <span>📝</span>
+    <div><b>Be Specific</b><small>Clear descriptions help officers resolve issues faster.</small></div>
+  </div>
+  <div class="tip-item">
+    <span>🤖</span>
+    <div><b>SmartGov AI Assistant</b><small>Click the chat icon at bottom-right for instant portal guidance.</small></div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,563 @@
+{% extends 'base.html' %}
+{% block title %}SmartGov | AI-Driven Public Grievance Redressal Platform{% endblock %}
+{% block body_class %}index-page{% endblock %}
+{% block content %}
+
+<!-- 
+     HERO SECTION
+ -->
+<section class="hero-advanced hero-centered">
+  <div class="hero-copy hero-copy-center">
+
+    <h1 class="reveal delay-one">Public service that <em>moves</em> with you.</h1>
+    <p class="hero-text reveal delay-two">SmartGov is a next-generation civic platform that uses Artificial Intelligence to route, prioritise and resolve citizen grievances across all government departments  faster, smarter and with full transparency.</p>
+    <div class="hero-actions reveal delay-three">
+      <a class="button button-large" href="{{ url_for('login') }}">File a Grievance</a>
+      <a class="quiet-link" href="{{ url_for('register') }}">Create free account</a>
+    </div>
+    <div class="trust-row reveal delay-four">
+      <span>01 <small>SUBMIT</small></span>
+      <span>02 <small>AI ROUTE</small></span>
+      <span>03 <small>TRACK</small></span>
+      <span>04 <small>RESOLVE</small></span>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     PLATFORM STATS
+ -->
+<section class="platform-stats">
+  <div class="pstat">
+    <b>5</b>
+    <span>Government Departments</span>
+  </div>
+  <div class="pstat-divider"></div>
+  <div class="pstat">
+    <b>24 / 7</b>
+    <span>Platform Availability</span>
+  </div>
+  <div class="pstat-divider"></div>
+  <div class="pstat">
+    <b>AI</b>
+    <span>Smart Priority Routing</span>
+  </div>
+  <div class="pstat-divider"></div>
+  <div class="pstat">
+    <b>OCR</b>
+    <span>Geo-Tag Verification</span>
+  </div>
+  <div class="pstat-divider"></div>
+  <div class="pstat">
+    <b>WhatsApp</b>
+    <span>Real-Time Notifications</span>
+  </div>
+</section>
+
+<!-- 
+     ABOUT THE PLATFORM
+ -->
+<section class="about-section">
+  <div class="about-text">
+    <p class="eyebrow">ABOUT SMARTGOV</p>
+    <h2>What is SmartGov?</h2>
+    <p>SmartGov is an AI-powered online grievance management system built for citizens of Tamil Nadu. It bridges the gap between citizens and government departments by providing a single, unified platform to report civic problems, attach location-verified evidence, and track every update  all in real time.</p>
+    <p style="margin-top:14px;">Whether it is a broken road, water shortage, drainage overflow, electricity failure, or a municipal issue  SmartGov ensures your complaint reaches the right department instantly and does not get lost in paperwork.</p>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <span class="highlight-icon"><img src="{{ url_for('static', filename='images/ai-routing.svg') }}" alt=""></span>
+        <div>
+          <b>AI-Powered Routing</b>
+          <small>Complaints are automatically categorised and sent to the correct department using machine learning  no manual sorting, no delays.</small>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon"><img src="{{ url_for('static', filename='images/geo-verify.svg') }}" alt=""></span>
+        <div>
+          <b>OCR Geo-Tag Verification</b>
+          <small>Every photo is scanned using Optical Character Recognition (OCR) to confirm it contains real location and date data. No fake reports accepted.</small>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon"><img src="{{ url_for('static', filename='images/transparency.svg') }}" alt=""></span>
+        <div>
+          <b>Full Transparency</b>
+          <small>Every status change, officer action, and department response is logged and visible to the citizen in real time on their personal dashboard.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-card-stack">
+    <div class="about-stat-card">
+      <svg class="asc-icon" aria-label="Government departments"><use href="{{ url_for('static', filename='images/icons.svg') }}#building"></use></svg>
+      <b>5 Departments Connected</b>
+      <small>Water Supply  Public Works  Municipal  Electricity  Drainage</small>
+    </div>
+    <div class="about-stat-card green">
+      <svg class="asc-icon" aria-label="AI classification"><use href="{{ url_for('static', filename='images/icons.svg') }}#sparkles"></use></svg>
+      <b>AI Priority Classification</b>
+      <small>High / Medium / Low priority assigned automatically based on complaint content and location data.</small>
+    </div>
+    <div class="about-stat-card">
+      <svg class="asc-icon" aria-label="GPS location"><use href="{{ url_for('static', filename='images/icons.svg') }}#map-pin"></use></svg>
+      <b>GPS Location Verified</b>
+      <small>Every complaint must include a geo-tagged photo  ensuring complaints are real and location-accurate.</small>
+    </div>
+  </div>
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">ABOUT US</p>
+    <h2>Transforming Public Redressal</h2>
+    <p style="color:var(--ink-dim);max-width:520px;margin:10px auto 0;font-size:15px;">SmartGov replaces slow, paper-based complaint filing with an intelligent digital system designed for clarity and speed.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>The Challenge</h3>
+      <p>Traditional grievance filing often leads to lost files, wrong department assignments, unverified complaints, and zero visibility for citizens on their complaint status.</p>
+    </div>
+    <div class="about-card highlight">
+      <h3>The SmartGov Solution</h3>
+      <p>AI-driven department routing, mandatory geo-tagged photo verification, instant priority classification, and real-time dashboard updates for full transparency.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     HOW IT WORKS
+ -->
+<section class="hiw-section">
+  <div style="text-align:center;margin-bottom:40px;">
+    <p class="eyebrow">SIMPLE PROCESS</p>
+    <h2>How SmartGov Works</h2>
+    <p style="color:var(--ink-dim);max-width:520px;margin:12px auto 0;font-size:15px;">A simple four-step journey from filing your complaint to receiving the resolution.</p>
+  </div>
+  <div class="hiw-grid">
+    <div class="hiw-step">
+      <div class="hiw-num">01</div>
+      <h3>Create an Account</h3>
+      <p>Register with your name, email, and mobile number to manage your complaints and view live status updates.</p>
+      <a href="{{ url_for('register') }}" class="text-link">Register now </a>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-num">02</div>
+      <h3>File Your Complaint</h3>
+      <p>Describe the issue clearly, choose a category, enter your location, and attach a geo-tagged photo taken with GPS Map Camera. The photo must show visible location, date, and time.</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-num">03</div>
+      <h3>AI Routes Instantly</h3>
+      <p>Our AI engine reads your complaint, assigns a priority (High / Medium / Low), detects duplicates, and routes it to the correct government department  all within seconds.</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-num">04</div>
+      <h3>Track & Get Resolved</h3>
+      <p>Monitor your complaint status live on your personal dashboard at every stage  from acknowledgment to in-progress to final resolution.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     DEPARTMENTS COVERED
+ -->
+<section class="dept-section">
+  <div style="text-align:center;margin-bottom:32px;">
+    <p class="eyebrow">DEPARTMENTS</p>
+    <h2>We Cover These Areas</h2>
+    <p style="color:var(--ink-dim);max-width:480px;margin:10px auto 0;font-size:14px;">SmartGov connects citizens directly to the responsible government department for each type of issue.</p>
+  </div>
+  <div class="dept-grid">
+    <div class="dept-card">
+      <svg class="page-icon" aria-label="Water supply"><use href="{{ url_for('static', filename='images/icons.svg') }}#droplets"></use></svg>
+      <h3>Water Supply</h3>
+      <p>No water supply, leakage, pipeline damage, water quality issues, tanker delays</p>
+    </div>
+    <div class="dept-card">
+      <svg class="page-icon" aria-label="Public works"><use href="{{ url_for('static', filename='images/icons.svg') }}#construction"></use></svg>
+      <h3>Public Works</h3>
+      <p>Potholes, damaged roads, broken footpaths, construction issues, bridge maintenance</p>
+    </div>
+    <div class="dept-card">
+      <svg class="page-icon" aria-label="Municipal services"><use href="{{ url_for('static', filename='images/icons.svg') }}#trash"></use></svg>
+      <h3>Municipal</h3>
+      <p>Garbage collection, waste disposal, street cleaning, illegal dumping, sanitation</p>
+    </div>
+    <div class="dept-card">
+      <svg class="page-icon" aria-label="Electricity"><use href="{{ url_for('static', filename='images/icons.svg') }}#zap"></use></svg>
+      <h3>Electricity</h3>
+      <p>Power outages, streetlight failures, wire hazards, transformer issues, metering problems</p>
+    </div>
+    <div class="dept-card">
+      <svg class="page-icon" aria-label="Drainage"><use href="{{ url_for('static', filename='images/icons.svg') }}#waves"></use></svg>
+      <h3>Drainage</h3>
+      <p>Blocked drains, sewage overflow, flooding, open manholes, storm drain failures</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     KEY FEATURES
+ -->
+<section class="features-section">
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">PLATFORM FEATURES</p>
+    <h2>Why SmartGov is Different</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Artificial intelligence"><use href="{{ url_for('static', filename='images/icons.svg') }}#sparkles"></use></svg>
+      <h3>Artificial Intelligence</h3>
+      <p>Machine learning automatically classifies every complaint by category and assigns a priority level  ensuring urgent issues like flooding or power outages get immediate attention.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Photo verification"><use href="{{ url_for('static', filename='images/icons.svg') }}#scan"></use></svg>
+      <h3>Photo Verification</h3>
+      <p>Using Optical Character Recognition, the system verifies that uploaded photos are genuine geo-tagged images containing visible location coordinates, date and time  preventing false reports.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Location intelligence"><use href="{{ url_for('static', filename='images/icons.svg') }}#map-pin"></use></svg>
+      <h3>Location Intelligence</h3>
+      <p>Every complaint is pinned to exact GPS coordinates. Department officers can open the location directly in Google Maps  enabling faster on-ground response without guesswork.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Real-time tracking"><use href="{{ url_for('static', filename='images/icons.svg') }}#message"></use></svg>
+      <h3>Real-Time Tracking</h3>
+      <p>Citizens receive status updates on their account dashboard whenever an officer updates their complaint  keeping them fully informed at every stage.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Database"><use href="{{ url_for('static', filename='images/icons.svg') }}#database"></use></svg>
+      <h3>MySQL Database</h3>
+      <p>All citizen data, complaints, officer records, and status updates are stored securely in a MySQL database  ensuring data integrity, reliability, and fast retrieval at scale.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" aria-label="Role-based access control"><use href="{{ url_for('static', filename='images/icons.svg') }}#shield-user"></use></svg>
+      <h3>Role-Based Access</h3>
+      <p>Three separate portals  Citizen, Department Officer, and Admin  ensure that each user sees only what is relevant to their role, with full security and accountability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     IMPACT STRIP
+ -->
+<section class="impact-strip">
+  <p>DESIGNED FOR CITIZENS. BUILT FOR ACCOUNTABILITY. POWERED BY AI.</p>
+  <div>
+    <span><b>Faster</b> routing</span>
+    <span><b>Verified</b> evidence</span>
+    <span><b>Real-time</b> status updates</span>
+    <span><b>Zero</b> paperwork</span>
+  </div>
+</section>
+
+<!-- 
+     WHO CAN USE
+ -->
+<section class="who-section">
+  <div style="text-align:center;margin-bottom:32px;">
+    <p class="eyebrow">USER ROLES</p>
+    <h2>Who Can Use SmartGov?</h2>
+  </div>
+  <div class="who-grid">
+    <div class="who-card">
+      <svg class="who-icon" aria-label="Citizens"><use href="{{ url_for('static', filename='images/icons.svg') }}#user"></use></svg>
+      <h3>Citizens</h3>
+      <p>Any resident of Tamil Nadu can create a free account and file complaints about civic issues in their area. Track every update live on your personal dashboard instantly.</p>
+      <a class="button" href="{{ url_for('register') }}" style="margin-top:16px;display:inline-flex;">Register as Citizen </a>
+    </div>
+    <div class="who-card">
+      <svg class="who-icon" aria-label="Department officers"><use href="{{ url_for('static', filename='images/icons.svg') }}#briefcase"></use></svg>
+      <h3>Department Officers</h3>
+      <p>Government department officers receive and manage complaints assigned to their department. They can update status, add resolution notes, and notify citizens  all from a dedicated officer dashboard.</p>
+    </div>
+    <div class="who-card">
+      <svg class="who-icon" aria-label="Administrators"><use href="{{ url_for('static', filename='images/icons.svg') }}#users"></use></svg>
+      <h3>Administrators</h3>
+      <p>Admin users have full oversight of the entire platform  monitoring all complaints, managing officer accounts, and viewing department performance reports.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     IMPACT NUMBERS
+ -->
+<section class="impact-section">
+  <div style="text-align:center;margin-bottom:40px;">
+    <p class="eyebrow">REAL IMPACT</p>
+    <h2>SmartGov by the Numbers</h2>
+    <p style="color:var(--ink-dim);max-width:480px;margin:12px auto 0;font-size:14px;">Real results from a technology-first approach to civic service delivery.</p>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-num">78%</div>
+      <b>Faster Resolution</b>
+      <p>Complaints are resolved 78% faster compared to traditional paper-based grievance systems, thanks to AI routing and direct department access.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">100%</div>
+      <b>Verified Evidence</b>
+      <p>Every complaint photo undergoes OCR verification. Only photos with real GPS location, date and time are accepted  eliminating fake or duplicate reports.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">5 Depts</div>
+      <b>Connected Instantly</b>
+      <p>Water Supply, Public Works, Municipal, Electricity and Drainage departments all receive real-time complaint notifications on their dedicated dashboards.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">0</div>
+      <b>Paperwork Required</b>
+      <p>Citizens no longer need to visit government offices, fill physical forms, or follow up in person. Everything is handled digitally through SmartGov.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     TRADITIONAL VS SMARTGOV
+ -->
+<section class="compare-section">
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">WHY SMARTGOV</p>
+    <h2>Old System vs SmartGov</h2>
+    <p style="color:var(--ink-dim);max-width:480px;margin:10px auto 0;font-size:14px;">See how SmartGov transforms the traditional grievance process end to end.</p>
+  </div>
+  <div class="compare-table">
+    <div class="compare-col old">
+      <div class="compare-header"> Traditional System</div>
+      <div class="compare-row">Visit government office physically</div>
+      <div class="compare-row">Fill paper forms manually</div>
+      <div class="compare-row">No tracking  follow up yourself</div>
+      <div class="compare-row">No proof of submission</div>
+      <div class="compare-row">Weeks to months for resolution</div>
+      <div class="compare-row">No location verification</div>
+      <div class="compare-row">No citizen notification</div>
+      <div class="compare-row">Complaints can be lost or ignored</div>
+    </div>
+    <div class="compare-vs">VS</div>
+    <div class="compare-col new">
+      <div class="compare-header"> SmartGov</div>
+      <div class="compare-row">Submit online from anywhere, anytime</div>
+      <div class="compare-row">Simple digital form with auto-save</div>
+      <div class="compare-row">Live status tracking on dashboard</div>
+      <div class="compare-row">Reference number & digital record</div>
+      <div class="compare-row">AI routing cuts resolution time drastically</div>
+      <div class="compare-row">GPS + OCR photo verification</div>
+      <div class="compare-row">Real-time status tracking at every step</div>
+      <div class="compare-row">Permanent digital audit trail</div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     TECHNOLOGY STACK
+ -->
+<section class="tech-section">
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">BUILT WITH</p>
+    <h2>Technology Behind SmartGov</h2>
+    <p style="color:var(--ink-dim);max-width:500px;margin:10px auto 0;font-size:14px;">SmartGov is built using modern, production-grade technologies to ensure reliability, security, and scalability.</p>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="Python and Flask"><use href="{{ url_for('static', filename='images/icons.svg') }}#construction"></use></svg>
+      <b>Python & Flask</b>
+      <small>Backend API, routing, authentication, session management and all business logic runs on Python 3 with Flask web framework.</small>
+    </div>
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="MySQL database"><use href="{{ url_for('static', filename='images/icons.svg') }}#database"></use></svg>
+      <b>MySQL Database</b>
+      <small>Production-grade relational database stores all citizen data, complaints, officer records, and status history with full ACID compliance.</small>
+    </div>
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="AI and machine learning"><use href="{{ url_for('static', filename='images/icons.svg') }}#sparkles"></use></svg>
+      <b>AI / ML Routing</b>
+      <small>Machine learning model reads complaint text and automatically classifies it by department and assigns priority: High, Medium, or Low.</small>
+    </div>
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="Tesseract OCR"><use href="{{ url_for('static', filename='images/icons.svg') }}#scan"></use></svg>
+      <b>Tesseract OCR</b>
+      <small>Open-source Optical Character Recognition engine by Google reads text from uploaded photos to verify presence of GPS location, date and time watermarks.</small>
+    </div>
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="Real-time Notifications"><use href="{{ url_for('static', filename='images/icons.svg') }}#message"></use></svg>
+      <b>Real-Time Tracking</b>
+      <small>Live status updates and timeline records keep citizens informed on their dashboard as their complaint progresses.</small>
+    </div>
+    <div class="tech-card">
+      <svg class="tech-logo" aria-label="Google Maps GPS"><use href="{{ url_for('static', filename='images/icons.svg') }}#map-pin"></use></svg>
+      <b>Google Maps GPS</b>
+      <small>Geo-tagged photo coordinates are linked to Google Maps so officers can navigate directly to the reported location without manual address entry.</small>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     TESTIMONIALS
+ -->
+<section class="testimonials-section">
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">CITIZEN VOICES</p>
+    <h2>What Citizens Say</h2>
+    <p style="color:var(--ink-dim);max-width:480px;margin:10px auto 0;font-size:14px;">Real experiences from citizens who used SmartGov to resolve their civic issues.</p>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="5 / 5 rating">5 / 5</div>
+      <p>"I reported a major water pipeline leakage in our street. Within 48 hours the Water Supply department acknowledged my complaint and sent workers to fix it. I tracked status updates on my dashboard throughout!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RK</div>
+        <div>
+          <b>Rajesh Kumar</b>
+          <small>Coimbatore, Tamil Nadu</small>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="5 / 5 rating">5 / 5</div>
+      <p>"The road in front of our school had a huge pothole for months. I submitted it on SmartGov with a geo-tagged photo and the Public Works department resolved it in just 3 days. Amazing platform!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PM</div>
+        <div>
+          <b>Priya Murugan</b>
+          <small>Coimbatore, Tamil Nadu</small>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="4 / 5 rating">4 / 5</div>
+      <p>"Our area had a garbage pile-up for two weeks. I filed a complaint on SmartGov and the Municipal department cleaned it the next day. I love how I can track everything from my phone."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AS</div>
+        <div>
+          <b>Anitha Selvam</b>
+          <small>Coimbatore, Tamil Nadu</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     FAQ
+ -->
+<section class="faq-section">
+  <div style="text-align:center;margin-bottom:36px;">
+    <p class="eyebrow">FAQ</p>
+    <h2>Frequently Asked Questions</h2>
+    <p style="color:var(--ink-dim);max-width:480px;margin:10px auto 0;font-size:14px;">Everything you need to know before you get started with SmartGov.</p>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">Is SmartGov free to use?</div>
+      <div class="faq-a">Yes. SmartGov is completely free for all citizens. There are no registration fees, no subscription charges, and no hidden costs. It is a government-supported public service platform.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What kind of photo do I need to upload?</div>
+      <div class="faq-a">You must upload a photo taken with a GPS Camera app (such as "GPS Map Camera") that shows the location address, GPS coordinates, date and time visibly on the image. Photos that lack embedded location EXIF data are NOT accepted.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does it take to resolve a complaint?</div>
+      <div class="faq-a">Resolution time depends on the department and issue type. High priority complaints (flooding, electrical hazards) are typically acknowledged within hours. General complaints may take 3-7 working days. You can track status updates on your dashboard throughout.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I track my complaint after submitting?</div>
+      <div class="faq-a">Yes. Once you submit a complaint, you receive a unique Reference ID (e.g. SGRS-000001). Log into your dashboard at any time to see the full status timeline, department updates, and resolution notes.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Which areas does SmartGov serve?</div>
+      <div class="faq-a">SmartGov currently serves citizens across the Coimbatore district of Tamil Nadu. It covers all panchayats, town panchayats, and municipal areas under the supported government departments.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if my complaint is not resolved?</div>
+      <div class="faq-a">If a complaint remains unresolved beyond the expected time, it is flagged for administrator review. You can also contact the department directly using the contact details below.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     CONTACT / IMPORTANT LINKS
+ -->
+<section class="contact-section">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="eyebrow">CONTACT & SUPPORT</p>
+      <h2>Need Help?</h2>
+      <p>If you face technical issues with SmartGov or your complaint has not been responded to, reach out through the following channels. For emergency civic issues, contact the relevant department directly.</p>
+      <div class="contact-list">
+        <div class="contact-item">
+          <svg class="page-icon" aria-label="Email support"><use href="{{ url_for('static', filename='images/icons.svg') }}#mail"></use></svg>
+          <div>
+            <b>Email Support</b>
+            <small>support@smartgov.tn.gov.in</small>
+          </div>
+        </div>
+        <div class="contact-item">
+          <svg class="page-icon" aria-label="Helpline"><use href="{{ url_for('static', filename='images/icons.svg') }}#phone"></use></svg>
+          <div>
+            <b>Helpline</b>
+            <small>1800-XXX-XXXX (Toll Free  MonSat  9 AM  6 PM)</small>
+          </div>
+        </div>
+        <div class="contact-item">
+          <svg class="page-icon" aria-label="Office address"><use href="{{ url_for('static', filename='images/icons.svg') }}#map-pin"></use></svg>
+          <div>
+            <b>Office Address</b>
+            <small>District Collectorate, Coimbatore, Tamil Nadu  641 018</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="emergency-links">
+      <p class="eyebrow">EMERGENCY CONTACTS</p>
+      <div class="emergency-grid">
+        <div class="emergency-item">
+          <svg class="page-icon" aria-label="Water supply"><use href="{{ url_for('static', filename='images/icons.svg') }}#droplets"></use></svg>
+          <b>Water Board</b>
+          <small>0422-XXX-XXXX</small>
+        </div>
+        <div class="emergency-item">
+          <svg class="page-icon" aria-label="Electricity emergency"><use href="{{ url_for('static', filename='images/icons.svg') }}#zap"></use></svg>
+          <b>TNEB Electricity</b>
+          <small>94987-XXXXX</small>
+        </div>
+        <div class="emergency-item">
+          <svg class="page-icon" aria-label="Municipal services"><use href="{{ url_for('static', filename='images/icons.svg') }}#trash"></use></svg>
+          <b>Corporation</b>
+          <small>0422-XXX-XXXX</small>
+        </div>
+        <div class="emergency-item">
+          <svg class="page-icon" aria-label="Emergency"><use href="{{ url_for('static', filename='images/icons.svg') }}#siren"></use></svg>
+          <b>Emergency</b>
+          <small>112</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+     IMPACT STRIP
+ -->
+<section class="impact-strip">
+  <p>DESIGNED FOR CITIZENS. BUILT FOR ACCOUNTABILITY. POWERED BY AI.</p>
+  <div>
+    <span><b>Faster</b> routing</span>
+    <span><b>Verified</b> evidence</span>
+    <span><b>Real-time</b> status updates</span>
+    <span><b>Zero</b> paperwork</span>
+  </div>
+</section>
+
+<!-- 
+     CTA
+ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <p class="eyebrow" style="color:rgba(255,255,255,.6);">GET STARTED TODAY</p>
+    <h2>Your voice deserves a response.</h2>
+    <p>Join SmartGov and make sure every civic issue you face gets the attention it deserves  backed by technology, verified evidence, and government accountability.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:28px;">
+      <a class="button button-large cta-btn" href="{{ url_for('register') }}">Create Free Account </a>
+      <a class="button button-large cta-btn-outline" href="{{ url_for('login') }}">Sign In</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

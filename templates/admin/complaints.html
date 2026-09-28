@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}All Grievances | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1>All Grievances</h1>
+  </div>
+</div>
+<section class="card">
+  {% include 'common/complaint_table.html' %}
+</section>
+{% endblock %}

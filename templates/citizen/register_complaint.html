@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Register Complaint | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">New Grievance</p>
+    <h1>Report an Issue</h1>
+    <p>Provide clear details so the right department can respond quickly.</p>
+  </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="card form-grid" id="complaint-form">
+
+  <label class="wide">Issue Title
+    <input name="title" placeholder="e.g. Damaged road near the bus stand" required>
+  </label>
+
+  <label>Issue Category
+    <select name="category" required>
+      <option value="">Choose a category</option>
+      {% for cat in ['Roads & Streetlights','Waste & Sanitation','Water Supply','Electricity','Drainage & Sewage'] %}
+        <option>{{ cat }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Location / Landmark
+    <input name="address" placeholder="Street, village, ward, or nearby landmark">
+  </label>
+
+  <label>Latitude
+    <input name="latitude" id="latitude" placeholder="Auto-filled from GPS or photo" readonly>
+  </label>
+
+  <label>Longitude
+    <input name="longitude" id="longitude" placeholder="Auto-filled from GPS or photo" readonly>
+  </label>
+
+  <div>
+    <button type="button" class="outline" id="location-button" style="margin-top:28px;width:100%">
+      📍 Use My Current Location
+    </button>
+  </div>
+
+  <label class="wide">
+    Photo Evidence
+    <div class="geo-notice" style="margin-top:10px">
+      <span class="geo-icon">📸</span>
+      <span><strong>Geo-tagged photo required.</strong> Only JPG/JPEG photos with GPS location embedded are accepted.
+      Make sure your phone's Location/GPS was <strong>ON</strong> when you took the photo. PNG and WEBP are not accepted.</span>
+    </div>
+    <input type="file" name="image" accept="image/jpeg" id="photo-input" style="margin-top:10px">
+    <div id="photo-status" style="margin-top:8px;font-size:13px;color:var(--text-dim)"></div>
+  </label>
+
+  <label class="wide">Describe the Issue
+    <textarea name="description" rows="6" placeholder="What happened, when did it start, and how does it affect people?" required></textarea>
+  </label>
+
+  <div class="wide actions">
+    <button class="button" type="submit">Submit Grievance →</button>
+    <a class="text-link" href="{{ url_for('citizen_dashboard') }}">Cancel</a>
+  </div>
+
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/complaint.js') }}"></script>
+{% endblock %}

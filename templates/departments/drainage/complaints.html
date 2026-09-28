@@ -1,0 +1,6 @@
+﻿{% extends 'base.html' %}
+{% block title %}Drainage & Sewage complaints | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">DRAINAGE & SEWAGE</p><h1>Complaint queue</h1><p>Review, prioritize, and update every assigned grievance.</p></div><a class="outline" href="{{ url_for('department_dashboard', department='drainage') }}">Dashboard</a></div>
+<section class="card"><div class="section-title"><h2>All assigned grievances</h2><span class="badge">{{ complaints|length if complaints else 0 }} cases</span></div>{% if complaints %}{% include 'common/complaint_table.html' %}{% else %}<div class="empty"><h3>No assigned grievances</h3><p>There are currently no complaints in this department queue.</p></div>{% endif %}</section>
+{% endblock %}

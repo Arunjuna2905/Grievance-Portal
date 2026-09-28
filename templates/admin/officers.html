@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Staff | SmartGov Admin{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1>Staff directory</h1>
+    <p>Contact details and active complaint workload for each staff member.</p>
+  </div>
+  <a class="outline" href="{{ url_for('admin_dashboard') }}">Back to dashboard</a>
+</div>
+
+<section class="card">
+  {% if users %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Staff name</th>
+          <th>Mobile number</th>
+          <th>Email</th>
+          <th>Pending complaints</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td><b>{{ u.name }}</b></td>
+          <td>{{ u.phone or 'Not provided' }}</td>
+          <td>{{ u.email }}</td>
+          <td><span class="badge submitted">{{ u.pending_complaints }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty"><h3>No staff profiles yet</h3><p>Staff profiles will appear here after the application starts.</p></div>
+  {% endif %}
+</section>
+{% endblock %}

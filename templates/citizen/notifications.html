@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Notifications | SmartGov{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">ACCOUNT ALERTS</p><h1>Notifications</h1><p>Staff assignments and status updates for your submitted complaints appear here.</p></div></div>
+<section class="card notification-list">
+  {% if notifications %}
+    {% for notification in notifications %}
+      <a class="notification-item {% if not notification.is_read %}unread{% endif %}" href="{{ url_for('complaint_status', complaint_id=notification.complaint_id) }}">
+        <div><h2>{{ notification.title }}</h2><p>{{ notification.message }}</p><small>{{ notification.created_at.strftime('%d %b %Y, %I:%M %p') if notification.created_at else '' }}</small></div>
+        <span aria-hidden="true">&rsaquo;</span>
+      </a>
+    {% endfor %}
+  {% else %}
+    <div class="empty"><h3>No notifications yet</h3><p>When a department updates one of your complaints, the alert will appear here.</p></div>
+  {% endif %}
+</section>
+{% endblock %}

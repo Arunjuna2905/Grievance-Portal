@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% block title %}Departments | SmartGov Admin{% endblock %}
+{% block content %}
+
+<!-- Clean Light Theme Styling matching SmartGov Design System -->
+<style>
+  .dept-grid-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 24px;
+  }
+
+  .dept-portal-card {
+    background: var(--bg2, #ffffff);
+    border: 1px solid #000000;
+    border-radius: var(--radius, 12px);
+    padding: 22px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow, 0 4px 12px rgba(15, 23, 42, 0.03));
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .dept-portal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md, 0 12px 28px -4px rgba(15, 23, 42, 0.08));
+    border-color: #000000;
+  }
+
+  .dept-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .dept-portal-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--green-light, #ecfdf5);
+    color: var(--green-dark, #059669);
+    white-space: nowrap;
+  }
+
+  .dept-icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--green-light, #ecfdf5);
+    color: var(--green-dark, #059669);
+    display: grid;
+    place-items: center;
+  }
+
+  .dept-card-title {
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink, #0f172a);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .dept-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px;
+    background: var(--bg, #f8fafc);
+    border-radius: 8px;
+    border: 1px solid var(--border, #e2e8f0);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .dept-stat-item b {
+    display: block;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .dept-stat-item span {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-dim, #64748b);
+    margin-top: 2px;
+  }
+
+  .dept-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--border, #e2e8f0);
+  }
+
+  .dept-action-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-dark, #059669);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .dept-portal-card:hover .dept-action-link {
+    color: var(--green, #10b981);
+  }
+</style>
+
+<div class="page-head">
+  <div>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1>Department Portals</h1>
+    <p>Select any department to access its dedicated admin workspace and resolve assigned complaints.</p>
+  </div>
+</div>
+
+<section class="dept-grid-section">
+  {% for d in department_data %}
+  {% set dept_name_lower = d.name.lower() %}
+  {% set dept_slug = d.name.lower().replace(' ', '-') %}
+  {% set open_cases = d.total - d.resolved %}
+  
+  <a class="dept-portal-card" style="cursor: default;">
+    <div>
+      <div class="dept-card-top">
+        <div class="dept-icon-circle">
+          {% if 'public works' in dept_name_lower %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          {% elif 'municipal' in dept_name_lower %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18"></path>
+              <path d="M6 18V11"></path>
+              <path d="M10 18V11"></path>
+              <path d="M14 18V11"></path>
+              <path d="M18 18V11"></path>
+              <polygon points="12 2 20 7 4 7 12 2"></polygon>
+            </svg>
+          {% elif 'water' in dept_name_lower %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+            </svg>
+          {% elif 'electricity' in dept_name_lower %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          {% elif 'drainage' in dept_name_lower %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12h20"></path>
+              <path d="M2 6h20"></path>
+              <path d="M2 18h20"></path>
+            </svg>
+          {% else %}
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          {% endif %}
+        </div>
+        <span class="dept-portal-badge">DEPARTMENT PORTAL</span>
+      </div>
+
+      <h2 class="dept-card-title">
+        {{ d.name }}
+        {% if d.unread and d.unread > 0 %}
+          <span style="color: #dc2626; font-weight: 800; margin-left: 4px;" title="{{ d.unread }} new unread complaint(s)">({{ d.unread }})</span>
+        {% endif %}
+      </h2>
+    </div>
+
+    <div>
+      <div class="dept-stats-row">
+        <div class="dept-stat-item">
+          <b style="color: var(--ink);">{{ d.total }}</b>
+          <span>Total Cases</span>
+        </div>
+        <div class="dept-stat-item">
+          <b style="color: var(--green-dark);">{{ d.resolved }}</b>
+          <span>Resolved</span>
+        </div>
+        <div class="dept-stat-item">
+          <b style="color: #d97706;">{{ open_cases }}</b>
+          <span>Open</span>
+        </div>
+      </div>
+
+      <div class="dept-card-footer">
+        <span class="dept-action-link">Open Workspace →</span>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}

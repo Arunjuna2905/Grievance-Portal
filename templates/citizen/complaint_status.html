@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %}{{ complaint.reference }} | SmartGov{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <p class="eyebrow">{{ complaint.reference }}</p>
+    <h1>{{ complaint.title }}</h1>
+    <p>{{ complaint.department }} · Submitted {{ complaint.created_at }}</p>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+    <span class="badge {{ complaint.status | lower | replace(' ', '-') }}">{{ complaint.status }}</span>
+    <a class="text-link" href="{{ url_for('complaint_history') }}">← Back to My Complaints</a>
+  </div>
+</div>
+
+<!-- ── Progress Tracker ────────────────────────────────────── -->
+{% set stages = ['Submitted', 'Acknowledged', 'In Progress', 'Resolved'] %}
+{% set norm_status = 'Resolved' if complaint.status in ['Resolved', 'Closed'] else complaint.status %}
+{% set cur = stages.index(norm_status) if norm_status in stages else 0 %}
+
+<div class="progress-tracker card">
+  <p class="progress-label">COMPLAINT PROGRESS</p>
+  <div class="progress-track">
+    {% for stage in stages %}
+    {% set i = loop.index0 %}
+    <div class="pt-step {% if i <= cur %}done{% endif %} {% if i == cur %}active{% endif %}">
+      <div class="pt-circle">
+        {% if i < cur %}
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#16a34a"/><path d="M6 10.5l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {% elif i == cur %}
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#16a34a"/><path d="M6 10.5l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {% else %}
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#d1d5db" stroke-width="1.5" fill="#fff"/><text x="10" y="14" text-anchor="middle" fill="#9ca3af" font-size="9" font-weight="700">{{ loop.index }}</text></svg>
+        {% endif %}
+      </div>
+      <small class="{% if i <= cur %}pt-label-done{% else %}pt-label{% endif %}">{{ stage }}</small>
+    </div>
+    {% if not loop.last %}
+    <div class="pt-line {% if i < cur %}pt-line-done{% endif %}"></div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ── Detail Grid ────────────────────────────────────────────── -->
+<section class="detail-grid">
+
+  <!-- Left: Complaint Details -->
+  <article class="card">
+    <h2>Complaint Details</h2>
+    <dl>
+      <dt>Reference ID</dt><dd><b>{{ complaint.reference }}</b></dd>
+      <dt>Priority</dt>
+      <dd>
+        <span class="priority-tag priority-{{ complaint.priority | lower }}">
+          {{ '🔴' if complaint.priority == 'High' else ('🟡' if complaint.priority == 'Medium' else '🟢') }}
+          {{ complaint.priority }} Priority
+        </span>
+      </dd>
+      <dt>Category</dt><dd>{{ complaint.category }}</dd>
+      <dt>Department</dt><dd>{{ complaint.department }}</dd>
+      <dt>Location</dt><dd>{{ complaint.address or 'Not provided' }}</dd>
+      {% if complaint.latitude %}
+      <dt>Coordinates</dt>
+      <dd>
+        <a href="https://maps.google.com/?q={{ complaint.latitude }},{{ complaint.longitude }}" target="_blank" class="text-link">
+          📍 {{ complaint.latitude }}, {{ complaint.longitude }} (Open in Maps)
+        </a>
+      </dd>
+      {% endif %}
+      <dt>Description</dt><dd style="line-height:1.7;">{{ complaint.description }}</dd>
+      <dt>Date Filed</dt><dd>{{ complaint.created_at }}</dd>
+    </dl>
+
+    {% if complaint.image_path %}
+    <div style="margin-top:20px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:10px;">SUBMITTED EVIDENCE</p>
+      <a href="{{ url_for('static', filename=complaint.image_path) }}" target="_blank">
+        <img class="evidence" src="{{ url_for('static', filename=complaint.image_path) }}" alt="Geo-tagged evidence photo" style="max-width:100%; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow);">
+      </a>
+      <p style="font-size:11px;color:var(--green-dark);margin-top:8px;font-weight:600;">✓ Geo-tagged photo verified by OCR</p>
+    </div>
+    {% endif %}
+  </article>
+
+  <!-- Right: Timeline -->
+  <article class="card">
+    <h2>Update Timeline</h2>
+    <p style="color:var(--ink-dim);font-size:13px;margin-bottom:20px;">All department actions and status changes are recorded here.</p>
+
+    <div class="timeline">
+      {% for update in updates %}
+      <div>
+        <b>{{ update.status }}</b>
+        <p>{{ update.message or 'Status updated by department.' }}</p>
+        {% if update.image_path %}
+        <div style="margin: 10px 0;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--primary, #10b981);margin-bottom:6px;">📷 RESOLUTION / WORK PROOF PHOTO</p>
+          <a href="{{ url_for('static', filename=update.image_path) }}" target="_blank">
+            <img src="{{ url_for('static', filename=update.image_path) }}" alt="Resolution proof photo" style="max-width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.15); max-height:260px; object-fit:cover; display:block;">
+          </a>
+        </div>
+        {% endif %}
+        <small>{{ update.created_at }}</small>
+      </div>
+      {% else %}
+      <div class="empty" style="padding:28px 0;">
+        <p>No updates yet. The department will update this shortly.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if complaint.status in ['Resolved', 'Closed'] %}
+    <div class="resolved-badge">
+      <span>🎉</span>
+      <div>
+        <b>Complaint Resolved</b>
+        <small>This issue has been successfully resolved by the department.</small>
+      </div>
+    </div>
+    {% endif %}
+  </article>
+
+</section>
+{% endblock %}
